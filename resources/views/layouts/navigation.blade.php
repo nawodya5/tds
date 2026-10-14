@@ -28,6 +28,11 @@
             <span>Calendar</span>
         </a>
 
+        <a href="{{ url('/locations') }}" class="sidebar-link {{ request()->is('locations*') ? 'active' : '' }}">
+            <i class="bi bi-pin-map"></i>
+            <span>Location</span>
+        </a>
+
         <a href="{{ url('/attendance') }}" class="sidebar-link {{ request()->is('attendance*') ? 'active' : '' }}">
             <i class="bi bi-clipboard-check"></i>
             <span>Attendance</span>

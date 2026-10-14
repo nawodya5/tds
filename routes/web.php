@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,29 +19,26 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/calendar', function () {
-        return view('calendar');
-    })->name('calendar');
+    // Locations
+    Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
+    Route::post('/locations', [LocationController::class, 'store'])->name('locations.store');
+    Route::put('/locations/{location}', [LocationController::class, 'update'])->name('locations.update');
+    Route::delete('/locations/{location}', [LocationController::class, 'destroy'])->name('locations.destroy');
 
-    Route::get('/attendance', function () {
-        return view('attendance');
-    })->name('attendance');
+    // Classes
+    Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
+    Route::post('/classes', [ClassController::class, 'store'])->name('classes.store');
+    Route::put('/classes/{class}', [ClassController::class, 'update'])->name('classes.update');
+    Route::delete('/classes/{class}', [ClassController::class, 'destroy'])->name('classes.destroy');
 
-    Route::get('/classes', function () {
-        return view('classes');
-    })->name('classes');
 
-    Route::get('/class-sessions', function () {
-        return view('class_sessions');
-    })->name('class_sessions');
 
-    Route::get('/students', function () {
-        return view('students');
-    })->name('students');
 
-    Route::get('/settings', function () {
-        return view('settings');
-    })->name('settings');
+    // Students
+    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
+    Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

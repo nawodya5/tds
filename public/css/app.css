@@ -4,7 +4,7 @@ body {
     margin: 0;
     background: #f7f8fc;
     color: #202437;
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .app-sidebar {
@@ -66,7 +66,7 @@ body {
     margin-bottom: 5px;
     padding: 11px 13px;
     border-radius: 9px;
-    color: #626a7e;
+    color: #000000;
     text-decoration: none;
     font-size: 14px;
     transition: background 0.2s, color 0.2s;
@@ -232,11 +232,11 @@ body {
 :root {
     --tds-primary: #5141b8;
     --tds-primary-light: #f0edff;
-    --tds-text: #20243a;
+    --tds-text: #000000;
     --tds-muted: #858ba0;
     --tds-border: #e9eaf2;
     --tds-surface: #ffffff;
-    --tds-page: #f7f8fc;
+    --tds-page: #dce3ff;
 }
 
 body {

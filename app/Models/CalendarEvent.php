@@ -7,4 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class CalendarEvent extends Model
 {
     //
+    protected $fillable = [
+        'title',
+        'event_type',
+        'event_date',
+        'description',
+        'status',
+    ];
 }
