@@ -242,8 +242,7 @@ body {
 body {
     background: var(--tds-page);
     color: var(--tds-text);
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+   font-family: "Poppins", sans-serif;
     font-size: 13px;
     -webkit-font-smoothing: antialiased;
 }
