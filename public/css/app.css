@@ -1,0 +1,473 @@
+
+/* Application layout */
+body {
+    margin: 0;
+    background: #f7f8fc;
+    color: #202437;
+    font-family: Arial, sans-serif;
+}
+
+.app-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 1040;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100vh;
+    background: #fff;
+    border-right: 1px solid #e9eaf0;
+    transition: transform 0.25s ease;
+}
+
+.sidebar-brand {
+    min-height: 76px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f4;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #202437;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.sidebar-logo-image {
+    width: 32px;
+    height: 32px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 14px;
+}
+
+.sidebar-section-label {
+    padding: 0 12px 10px;
+    color: #969bad;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 46px;
+    margin-bottom: 5px;
+    padding: 11px 13px;
+    border-radius: 9px;
+    color: #626a7e;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-link i {
+    font-size: 18px;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+    color: #5546d8;
+    background: #f0efff;
+}
+
+.sidebar-link.active {
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    padding: 16px;
+    border-top: 1px solid #f0f0f4;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.sidebar-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #efedff;
+    color: #5546d8;
+    font-weight: 700;
+}
+
+.sidebar-user-info {
+    min-width: 0;
+}
+
+.sidebar-user-name,
+.sidebar-user-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sidebar-user-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sidebar-user-email {
+    color: #8b90a2;
+    font-size: 11px;
+}
+
+.sidebar-footer-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    border: 0;
+    background: transparent;
+    color: #626a7e;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.sidebar-footer-link:hover {
+    color: #5546d8;
+}
+
+.app-main {
+    min-height: 100vh;
+    margin-left: 250px;
+}
+
+.app-page-header {
+    padding: 20px 28px;
+    background: #fff;
+    border-bottom: 1px solid #e9eaf0;
+}
+
+.app-page-content {
+    padding: 28px;
+}
+
+.mobile-sidebar-toggle,
+.sidebar-close,
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .app-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .app-main {
+        margin-left: 0;
+    }
+
+    .app-page-content {
+        padding: 72px 16px 20px;
+    }
+
+    .app-page-header {
+        padding: 16px;
+    }
+
+    .mobile-sidebar-toggle {
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 1030;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border: 1px solid #e9eaf0;
+        border-radius: 9px;
+        background: #fff;
+        font-size: 23px;
+    }
+
+    .sidebar-close {
+        display: inline-flex;
+        border: 0;
+        background: transparent;
+        font-size: 18px;
+    }
+
+    .sidebar-overlay.is-visible {
+        position: fixed;
+        inset: 0;
+        z-index: 1035;
+        display: block;
+        background: rgb(0 0 0 / 35%);
+    }
+}
+
+
+
+
+/* ========================================
+   TDS — Luxury UI Typography & Components
+======================================== */
+
+:root {
+    --tds-primary: #5141b8;
+    --tds-primary-light: #f0edff;
+    --tds-text: #20243a;
+    --tds-muted: #858ba0;
+    --tds-border: #e9eaf2;
+    --tds-surface: #ffffff;
+    --tds-page: #f7f8fc;
+}
+
+body {
+    background: var(--tds-page);
+    color: var(--tds-text);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Display typography */
+h1, h2, h3, h4, h5, h6,
+.student-page-title,
+.sidebar-logo {
+    font-family: "Momo Trust Display", sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.35px;
+    color: var(--tds-text);
+}
+
+.student-page-title {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+h5 {
+    font-size: 15px;
+}
+
+/* Refined page spacing */
+.app-page-content {
+    padding: 24px;
+}
+
+.text-secondary {
+    color: var(--tds-muted) !important;
+}
+
+.small, small {
+    font-size: 11px;
+}
+
+/* Luxury cards */
+.student-card {
+    background: var(--tds-surface) !important;
+    color: var(--tds-text) !important;
+    border: 1px solid var(--tds-border);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgb(31 41 80 / 3%);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.student-card:hover {
+    box-shadow: 0 7px 20px rgb(31 41 80 / 6%);
+}
+
+.student-card .card-body {
+    background: transparent !important;
+    color: inherit !important;
+}
+
+.student-stat-icon {
+    width: 39px;
+    height: 39px;
+    border-radius: 11px;
+    font-size: 19px;
+}
+
+.student-card h3 {
+    font-family: "Momo Trust Display", sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+/* Compact table */
+#studentsTable {
+    width: 100% !important;
+    font-size: 11.5px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#studentsTable thead th {
+    padding: 11px 10px;
+    background: #f8f8fc !important;
+    color: #777e95 !important;
+    font-size: 9.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .65px;
+    border-bottom: 1px solid var(--tds-border);
+    white-space: nowrap;
+}
+
+#studentsTable tbody td {
+    padding: 10px;
+    color: var(--tds-text) !important;
+    font-size: 11.5px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f1f6;
+    background: #fff !important;
+}
+
+#studentsTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#studentsTable tbody tr:hover td {
+    background: #faf9ff !important;
+}
+
+#studentsTable .student-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    font-size: 11px;
+}
+
+#studentsTable .student-name {
+    font-family: "Momo Trust Display", sans-serif;
+    font-size: 11.5px;
+    font-weight: 400;
+}
+
+#studentsTable .student-subtitle {
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+#studentsTable .badge {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: .1px;
+}
+
+/* Compact actions */
+.student-action {
+    width: 29px;
+    height: 29px;
+    border-radius: 8px;
+    border-color: #e9eaf2;
+    font-size: 12px;
+    transition: all .2s ease;
+}
+
+.student-action:hover {
+    background: var(--tds-primary-light);
+    border-color: #d9d1ff;
+    color: var(--tds-primary);
+}
+
+/* Compact filters */
+.filter-select,
+.form-control,
+.form-select {
+    min-height: 36px;
+    border-radius: 8px;
+    border-color: #e2e5ef;
+    font-size: 12px;
+}
+
+.form-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #626981;
+    margin-bottom: 6px;
+}
+
+/* Buttons */
+.student-primary-btn {
+    background: var(--tds-primary);
+    border-color: var(--tds-primary);
+    border-radius: 9px;
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 3px 8px rgb(81 65 184 / 15%);
+}
+
+.student-primary-btn:hover {
+    background: #4233a0;
+    border-color: #4233a0;
+}
+
+/* DataTables controls */
+#studentsTable_wrapper {
+    font-size: 11px;
+}
+
+#studentsTable_wrapper .dt-search input,
+#studentsTable_wrapper .dt-length select {
+    min-height: 32px;
+    padding: 5px 9px;
+    border: 1px solid #e2e5ef;
+    border-radius: 8px;
+    font-size: 11px;
+    background: #fff;
+}
+
+#studentsTable_wrapper .dt-search input:focus {
+    outline: 3px solid #f0edff;
+    border-color: #a69ae8;
+}
+
+#studentsTable_wrapper .dt-info {
+    color: var(--tds-muted);
+    font-size: 10.5px;
+}
+
+#studentsTable_wrapper .dt-paging .dt-paging-button {
+    padding: 5px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+}
+
+/* Mobile and iPad */
+@media (max-width: 767.98px) {
+    .app-page-content {
+        padding: 16px;
+    }
+
+    .student-page-title {
+        font-size: 22px;
+    }
+
+    .student-card .card-body {
+        padding: 14px !important;
+    }
+
+    #studentsTable {
+        min-width: 800px;
+    }
+}
