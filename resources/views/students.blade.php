@@ -184,11 +184,14 @@
                     Home <i class="bi bi-chevron-right mx-1"></i> Students
                 </div>
 
-                <h2 class="student-page-title fw-bold mb-1">Students</h2>
+                {{-- <h2 class="student-page-title fw-bold mb-1">Students</h2>
 
                 <p class="text-secondary mb-0">
                     Manage your dance students and their class registrations.
-                </p>
+                </p> --}}
+
+                <h2 class="page-heading fw-bold mb-1">Students</h2>
+                <p class="text-secondary mb-0">Manage your dance students and their class registrations.</p>
             </div>
 
             <button type="button" class="btn student-primary-btn" data-bs-toggle="modal" data-bs-target="#studentModal">
@@ -471,7 +474,16 @@
 
 
                                         <button type="button" class="student-action me-1" title="Edit student"
-                                            onclick="editStudent({{ $student->id }})">
+                                            onclick="editStudent(this)" data-id="{{ $student->id }}"
+                                            data-name="{{ $student->name }}"
+                                            data-registration="{{ $student->registration_number }}"
+                                            data-dob="{{ $student->date_of_birth?->format('Y-m-d') ?? '' }}"
+                                            data-gender="{{ $student->gender ?? '' }}"
+                                            data-phone="{{ $student->student_contact_number }}"
+                                            data-address="{{ $student->address ?? '' }}"
+                                            data-notes="{{ $student->notes ?? '' }}"
+                                            data-class-id="{{ $primaryRegistration?->class_id ?? '' }}"
+                                            data-status="{{ $student->status ? '1' : '0' }}">
                                             <i class="bi bi-pencil"></i>
                                         </button>
 
@@ -637,6 +649,140 @@
     </div>
 
 
+
+    {{-- Edit student modal --}}
+    <div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-0 px-4 pt-4">
+                    <div>
+                        <h5 class="modal-title fw-bold" id="editStudentModalLabel">Edit Student</h5>
+                        <p class="small text-secondary mb-0">Update the student's information and primary class.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form id="editStudentForm" method="POST" action="">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="modal-body px-4">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="editStudentRegistration" class="form-label fw-semibold">Registration
+                                    Number</label>
+                                <input type="text" class="form-control" id="editStudentRegistration" readonly>
+                                <div class="form-text">The registration number cannot be changed.</div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentName" class="form-label fw-semibold">Full Name <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editStudentName" name="name"
+                                    maxlength="255" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="editStudentDob" class="form-label fw-semibold">Date of Birth</label>
+                                <input type="date" class="form-control" id="editStudentDob" name="date_of_birth"
+                                    max="{{ now()->toDateString() }}">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="editStudentGender" class="form-label fw-semibold">Gender</label>
+                                <select class="form-select" id="editStudentGender" name="gender">
+                                    <option value="">Select gender</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentPhone" class="form-label fw-semibold">Contact Number <span
+                                        class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="editStudentPhone"
+                                    name="student_contact_number" maxlength="20" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentAddress" class="form-label fw-semibold">Address</label>
+                                <textarea class="form-control" id="editStudentAddress" name="address" rows="2" maxlength="1000"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentClass" class="form-label fw-semibold">Primary Class <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="editStudentClass" name="class_id" required>
+                                    <option value="">Select class</option>
+                                    @foreach ($classes as $class)
+                                        <option value="{{ $class->id }}">
+                                            {{ $class->name }}@if ($class->location)
+                                                — {{ $class->location->name }}
+                                            @endif
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentNotes" class="form-label fw-semibold">Notes</label>
+                                <textarea class="form-control" id="editStudentNotes" name="notes" rows="2" maxlength="2000"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="editStudentStatus" class="form-label fw-semibold">Status <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="editStudentStatus" name="status" required>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-0 px-4 pb-4">
+                        <button type="button" class="btn btn-light rounded-3"
+                            data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn student-primary-btn">
+                            <i class="bi bi-check-lg me-1"></i> Update Student
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {{-- Delete confirmation modal --}}
+    <div class="modal fade" id="deleteStudentModal" tabindex="-1" aria-labelledby="deleteStudentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-body p-4 text-center">
+                    <div class="student-stat-icon stat-orange mx-auto mb-3">
+                        <i class="bi bi-trash"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2" id="deleteStudentModalLabel">Delete Student?</h5>
+                    <p class="text-secondary mb-4">
+                        Are you sure you want to delete <strong id="deleteStudentName">this student</strong>?
+                        The student will be moved to the deleted records and will no longer appear in the active list.
+                    </p>
+                    <form id="deleteStudentForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <div class="d-flex justify-content-center gap-2">
+                            <button type="button" class="btn btn-light rounded-3 px-4"
+                                data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger rounded-3 px-4">
+                                <i class="bi bi-trash me-1"></i> Delete Student
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- View student modal --}}
     <div class="modal fade" id="viewStudentModal" tabindex="-1" aria-labelledby="viewStudentModalLabel"
@@ -898,14 +1044,41 @@
                 ).show();
             }
 
-            // Temporary placeholder until the Edit modal is added.
-            function editStudent(id) {
-                alert('Edit functionality will be connected in the next step.');
+            // Open the edit modal and populate it from the selected table row.
+            function editStudent(button) {
+                const data = button.dataset;
+                const form = document.getElementById('editStudentForm');
+
+                form.action = @json(route('students.update', ['student' => '__STUDENT_ID__']))
+                    .replace('__STUDENT_ID__', encodeURIComponent(data.id));
+
+                document.getElementById('editStudentRegistration').value = data.registration || '';
+                document.getElementById('editStudentName').value = data.name || '';
+                document.getElementById('editStudentDob').value = data.dob || '';
+                document.getElementById('editStudentGender').value = data.gender || '';
+                document.getElementById('editStudentPhone').value = data.phone || '';
+                document.getElementById('editStudentAddress').value = data.address || '';
+                document.getElementById('editStudentNotes').value = data.notes || '';
+                document.getElementById('editStudentClass').value = data.classId || '';
+                document.getElementById('editStudentStatus').value = data.status || '0';
+
+                bootstrap.Modal.getOrCreateInstance(
+                    document.getElementById('editStudentModal')
+                ).show();
             }
 
-            // Temporary placeholder until the Delete confirmation is added.
+            // Ask for confirmation before submitting the soft-delete request.
             function deleteStudent(id, name) {
-                alert('Delete functionality will be connected in the next step.');
+                const form = document.getElementById('deleteStudentForm');
+
+                form.action = @json(route('students.destroy', ['student' => '__STUDENT_ID__']))
+                    .replace('__STUDENT_ID__', encodeURIComponent(id));
+
+                document.getElementById('deleteStudentName').textContent = name || 'this student';
+
+                bootstrap.Modal.getOrCreateInstance(
+                    document.getElementById('deleteStudentModal')
+                ).show();
             }
 
             // Reopen the Add Student modal if Laravel returns validation errors.

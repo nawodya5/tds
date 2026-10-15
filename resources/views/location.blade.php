@@ -221,8 +221,12 @@
                     <i class="bi bi-house-door me-1"></i> Home
                     <i class="bi bi-chevron-right mx-1"></i> Locations
                 </div>
-                <h2 class="location-page-title mb-1">Locations</h2>
+                {{-- <h2 class="location-page-title mb-1">Locations</h2>
                 <p class="text-secondary small mb-0">Manage your class locations and the classes assigned to each place.
+                </p> --}}
+
+                <h2 class="page-heading fw-bold mb-1">Locations</h2>
+                <p class="text-secondary mb-0">Manage your class locations and the classes assigned to each place.
                 </p>
             </div>
             <button type="button" class="btn location-primary-btn" onclick="openCreateLocationModal()">
