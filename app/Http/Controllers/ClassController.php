@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassModel;
 use App\Models\Location;
+use App\Services\ClassSessionGeneratorService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class ClassController extends Controller
 {
@@ -23,7 +28,7 @@ class ClassController extends Controller
     }
 
     // Store a class
-    public function store(Request $request)
+    public function store(Request $request, ClassSessionGeneratorService $sessionGenerator)
     {
         $validated = $request->validate([
             'location_id' => ['required', 'integer', 'exists:locations,id'],
@@ -31,20 +36,65 @@ class ClassController extends Controller
             'monthly_fee' => ['required', 'numeric', 'min:0'],
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
-            'status' => ['sometimes', 'boolean'],
+            'status' => ['required', 'boolean'],
+            'days' => ['required', 'array', 'min:1'],
+            'days.*' => ['required', 'integer', 'between:1,7', 'distinct'],
         ]);
 
         $validated['status'] = $request->boolean('status', true);
 
-        ClassModel::create($validated);
+        try {
+            DB::transaction(function () use ($validated, $sessionGenerator) {
+                $class = ClassModel::create([
+                    'location_id' => $validated['location_id'],
+                    'name' => $validated['name'],
+                    'monthly_fee' => $validated['monthly_fee'],
+                    'start_time' => $validated['start_time'],
+                    'end_time' => $validated['end_time'],
+                    'status' => $validated['status'],
+                ]);
 
-        return redirect()
-            ->route('classes.index')
-            ->with('success', 'Class created successfully.');
+                $class->days()->createMany(
+                    collect($validated['days'])
+                        ->map(fn($day) => [
+                            'day_of_week' => (int) $day,
+                        ])
+                        ->all()
+                );
+
+                $sessionGenerator->generateForClass($class);
+            });
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Class created successfully.',
+                ], 201);
+            }
+
+            return redirect()
+                ->route('classes')
+                ->with('success', 'Class created successfully.');
+        } catch (ValidationException $exception) {
+            throw $exception;
+        } catch (Throwable $exception) {
+            Log::error('Class creation failed.', [
+                'message' => $exception->getMessage(),
+            ]);
+
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Unable to save the class. Please check the submitted data and try again.',
+                ], 500);
+            }
+
+            return back()
+                ->withInput()
+                ->with('error', 'Unable to save the class. Please check the submitted data and try again.');
+        }
     }
 
     // Update a class
-    public function update(Request $request, ClassModel $class)
+    public function update(Request $request, ClassModel $class, ClassSessionGeneratorService $sessionGenerator)
     {
         $validated = $request->validate([
             'location_id' => ['required', 'integer', 'exists:locations,id'],
@@ -53,14 +103,54 @@ class ClassController extends Controller
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
             'status' => ['sometimes', 'boolean'],
+            'days' => ['required', 'array', 'min:1'],
+            'days.*' => [
+                'required',
+                'integer',
+                'between:1,7',
+                'distinct',
+            ],
         ]);
 
         $validated['status'] = $request->boolean('status', true);
 
-        $class->update($validated);
+        DB::transaction(function () use (
+            $validated,
+            $class,
+            $sessionGenerator
+        ) {
+            $class->update([
+                'location_id' => $validated['location_id'],
+                'name' => $validated['name'],
+                'monthly_fee' => $validated['monthly_fee'],
+                'start_time' => $validated['start_time'],
+                'end_time' => $validated['end_time'],
+                'status' => $validated['status'],
+            ]);
+
+            // Replace the recurring weekday configuration.
+            $class->days()->delete();
+
+            $class->days()->createMany(
+                collect($validated['days'])
+                    ->map(fn($day) => [
+                        'day_of_week' => (int) $day,
+                    ])
+                    ->all()
+            );
+
+            // Reconcile future sessions with the updated schedule.
+            $sessionGenerator->reconcileForClass($class->fresh());
+        });
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Class updated successfully.',
+            ]);
+        }
 
         return redirect()
-            ->route('classes.index')
+            ->route('classes')
             ->with('success', 'Class updated successfully.');
     }
 
@@ -70,7 +160,7 @@ class ClassController extends Controller
         $class->delete();
 
         return redirect()
-            ->route('classes.index')
+            ->route('classes')
             ->with('success', 'Class deleted successfully.');
     }
 }

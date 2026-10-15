@@ -16,6 +16,7 @@ class ClassSession extends Model
         'session_date',
         'start_time',
         'end_time',
+        'cancellation_reason',
         'status',
     ];
 

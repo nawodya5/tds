@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ClassSessionController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
@@ -39,6 +41,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
     Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
     Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+
+
+    // class sessions
+    Route::get('/class-sessions', [ClassSessionController::class, 'index'])->name('class-sessions.index');
+    Route::get('/class-sessions/data', [ClassSessionController::class, 'data'])->name('class-sessions.data');
+    Route::patch('/class-sessions/{classSession}/cancel', [ClassSessionController::class, 'cancel'])->name('class-sessions.cancel');
+
+
+
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendance/sessions', [AttendanceController::class, 'sessions'])->name('attendance.sessions');
+    Route::get('/attendance/students', [AttendanceController::class, 'students'])->name('attendance.students');
+    Route::get('/attendance/student-monthly-details', [AttendanceController::class, 'studentMonthlyDetails'])->name('attendance.student-monthly-details');
+    Route::post('/attendance/save', [AttendanceController::class, 'save'])->name('attendance.save');
 });
 
 require __DIR__ . '/auth.php';
