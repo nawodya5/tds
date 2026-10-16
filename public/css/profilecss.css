@@ -1,0 +1,195 @@
+/* TDS Attendance - Profile section styles */
+.profile-section {
+    --profile-primary: #6d4aff;
+    --profile-primary-dark: #5635df;
+    --profile-text: #24213a;
+    --profile-muted: #77758b;
+    --profile-border: #eceaf5;
+    color: var(--profile-text);
+    animation: profile-enter .45s ease both;
+}
+.profile-section * { box-sizing: border-box; }
+.profile-section .profile-section-header { margin-bottom: 1.35rem; }
+.profile-section .profile-section-title {
+    margin: 0;
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: var(--profile-text);
+}
+.profile-section .profile-section-description {
+    margin: .4rem 0 0;
+    max-width: 44rem;
+    color: var(--profile-muted);
+    font-size: .9rem;
+    line-height: 1.65;
+}
+.profile-section .profile-form {
+    display: grid;
+    gap: 1.15rem;
+    margin-top: 1.5rem;
+}
+.profile-section .profile-field { min-width: 0; }
+.profile-section .profile-label {
+    display: block;
+    margin-bottom: .45rem;
+    color: #45415e;
+    font-size: .84rem;
+    font-weight: 600;
+}
+.profile-section input:not([type="checkbox"]),
+.profile-section input:not([type="radio"]) {
+    transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+.profile-section input[type="text"],
+.profile-section input[type="email"],
+.profile-section input[type="password"] {
+    display: block;
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid #e5e2f0;
+    border-radius: 12px;
+    background: #fff;
+    padding: .7rem .9rem;
+    color: var(--profile-text);
+    font-size: .92rem;
+    box-shadow: 0 1px 2px rgb(35 24 80 / 3%);
+}
+.profile-section input[type="text"]:focus,
+.profile-section input[type="email"]:focus,
+.profile-section input[type="password"]:focus {
+    outline: none;
+    border-color: #9b88ff;
+    box-shadow: 0 0 0 4px rgb(109 74 255 / 12%);
+}
+.profile-section .profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .85rem;
+    margin-top: .25rem;
+}
+.profile-section button[type="submit"],
+.profile-section .profile-primary-button {
+    min-height: 42px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--profile-primary), var(--profile-primary-dark));
+    padding: .65rem 1.2rem;
+    color: #fff;
+    font-size: .88rem;
+    font-weight: 650;
+    box-shadow: 0 6px 15px rgb(109 74 255 / 19%);
+    transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    cursor: pointer;
+}
+.profile-section button[type="submit"]:hover,
+.profile-section .profile-primary-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 9px 20px rgb(109 74 255 / 25%);
+    filter: saturate(1.08);
+}
+.profile-section .profile-status {
+    color: #15803d;
+    font-size: .85rem;
+    font-weight: 600;
+    animation: profile-status-in .25s ease both;
+}
+.profile-section .profile-verification {
+    margin-top: .75rem;
+    border: 1px solid #f3dca6;
+    border-radius: 11px;
+    background: #fffbeb;
+    padding: .8rem .9rem;
+    color: #854d0e;
+    font-size: .84rem;
+    line-height: 1.55;
+}
+.profile-section .profile-verification button {
+    margin-left: .25rem;
+    color: #6540e8;
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.profile-section .profile-danger-button {
+    min-height: 42px;
+    border: 1px solid #fecaca;
+    border-radius: 11px;
+    background: #fff1f2;
+    padding: .65rem 1.1rem;
+    color: #be123c;
+    font-size: .88rem;
+    font-weight: 700;
+    transition: background-color .2s ease, transform .2s ease;
+    cursor: pointer;
+}
+.profile-section .profile-danger-button:hover {
+    background: #ffe4e6;
+    transform: translateY(-1px);
+}
+.profile-section .profile-delete-warning {
+    border: 1px solid #fee2e2;
+    border-radius: 13px;
+    background: #fff7f7;
+    padding: 1rem;
+}
+.profile-section .profile-delete-warning .profile-section-title { color: #9f1239; }
+.profile-section .profile-modal-card {
+    border-radius: 18px;
+    background: #fff;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow: 0 24px 70px rgb(24 17 55 / 20%);
+}
+.profile-section .profile-modal-title {
+    margin: 0;
+    color: var(--profile-text);
+    font-size: 1.12rem;
+    font-weight: 750;
+}
+.profile-section .profile-modal-description {
+    margin-top: .55rem;
+    color: var(--profile-muted);
+    font-size: .9rem;
+    line-height: 1.65;
+}
+.profile-section .profile-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: .7rem;
+    margin-top: 1.5rem;
+}
+.profile-section .profile-cancel-button {
+    min-height: 42px;
+    border: 1px solid #e7e4f0;
+    border-radius: 11px;
+    background: #fff;
+    padding: .65rem 1.1rem;
+    color: #514d66;
+    font-size: .88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+.profile-section .profile-cancel-button:hover { background: #f7f6fb; }
+.profile-section .profile-error {
+    margin-top: .4rem;
+    color: #dc2626;
+    font-size: .8rem;
+}
+@keyframes profile-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes profile-status-in {
+    from { opacity: 0; transform: translateX(-4px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .profile-section, .profile-section * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@php
+$appSettings = \App\Models\Setting::query()->first();
+@endphp
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    @if ($appSettings?->logo)
+        <link rel="icon" type="image/png"
+            href="{{ asset('storage/' . $appSettings->logo) }}?v={{ $appSettings->updated_at->timestamp }}">
+    @else
+        <link rel="icon" href="{{ asset('favicon.ico') }}">
+    @endif
 
     <title>@yield('title', config('app.name', 'TDS Attendance System'))</title>
 
@@ -96,8 +107,7 @@
                             placeholder: $select.attr('data-placeholder') || 'Select an option',
                             allowClear: true,
                             dropdownParent: $select.closest('.modal').length ?
-                                $select.closest('.modal') :
-                                $(document.body)
+                                $select.closest('.modal') : $(document.body)
                         });
                     });
             }

@@ -1,8 +1,16 @@
 <aside class="app-sidebar" id="appSidebar">
     <div class="sidebar-brand">
         <a href="{{ route('dashboard') }}" class="sidebar-logo">
+            @if ($appSettings?->logo)
+            <img
+                src="{{ asset('storage/' . $appSettings->logo) }}"
+                alt="Institute Logo"
+                class="sidebar-logo-image">
+            @else
             <x-application-logo class="sidebar-logo-image" />
-            <span>TDS Attendance</span>
+            @endif
+
+            <span>{{ $appSettings?->institute_name ?: 'TDS Attendance' }}</span>
         </a>
 
         <button

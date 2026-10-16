@@ -45,7 +45,6 @@
                 font-family: "Momo Trust Display", sans-serif;
                 font-size: 25px;
                 font-weight: 400;
-                letter-spacing: -.4px;
                 color: #20243a;
             }
 
