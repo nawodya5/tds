@@ -211,7 +211,7 @@
                             <div>
                                 <div class="text-secondary small mb-2">Total Students</div>
                                 <h3 class="fw-bold mb-2" id="totalStudents">
-                                    {{ $students->total() }}
+                                    {{ $students->count() }}
                                 </h3>
                                 <span class="small text-success">
                                     <i class="bi bi-people me-1"></i>All registered

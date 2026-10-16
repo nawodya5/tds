@@ -18,7 +18,8 @@ class ClassController extends Controller
     {
         $classes = ClassModel::with(['location', 'days'])
             ->latest()
-            ->paginate(10);
+            ->get();
+            // ->paginate(10);
 
         $locations = Location::where('status', true)
             ->orderBy('name')

@@ -18,7 +18,7 @@ class StudentController extends Controller
                 $query->where('status', true)
                     ->with('classroom.location');
             }
-        ])->latest()->paginate(10);
+        ])->latest()->get();
 
         $classes = ClassModel::where('status', true)
             ->orderBy('name')
