@@ -51,9 +51,9 @@
         <div class="app-main">
 
             @isset($header)
-                <header class="app-page-header">
-                    {{ $header }}
-                </header>
+            <header class="app-page-header">
+                {{ $header }}
+            </header>
             @endisset
 
             <main class="app-page-content">
@@ -80,20 +80,26 @@
     <script>
         $(document).ready(function() {
             function initializeSelect2(context = document) {
-                $(context).find('select.form-select').each(function() {
-                    const $select = $(this);
+                //$(context).find('select.form-select').each(function() {
+                $(context)
+                    .find('select.form-select')
+                    .not('#editStudentClass, #editStudentGender,#classLocation')
+                    .each(function() {
+                        const $select = $(this);
 
-                    // Prevent duplicate initialization
-                    if ($select.hasClass('select2-hidden-accessible')) {
-                        return;
-                    }
+                        if ($select.hasClass('select2-hidden-accessible')) {
+                            return;
+                        }
 
-                    $select.select2({
-                        width: '100%',
-                        placeholder: $select.attr('data-placeholder') || 'Select an option',
-                        allowClear: true
+                        $select.select2({
+                            width: '100%',
+                            placeholder: $select.attr('data-placeholder') || 'Select an option',
+                            allowClear: true,
+                            dropdownParent: $select.closest('.modal').length ?
+                                $select.closest('.modal') :
+                                $(document.body)
+                        });
                     });
-                });
             }
 
             // Initialize all existing dropdowns

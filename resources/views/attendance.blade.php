@@ -364,6 +364,7 @@
                 color: #35246f !important;
                 font-size: 16px;
                 font-weight: 700;
+                margin-bottom: 1.5rem;
             }
 
             #attendanceStudentModal .heading-icon {
@@ -418,6 +419,7 @@
                 color: #126638 !important;
                 background: #d1f7df !important;
                 border: 1px solid #8ce0ae !important;
+                gap: 6px;
             }
 
             #attendanceStudentModal #modalFeeBadge.payment-unpaid,
